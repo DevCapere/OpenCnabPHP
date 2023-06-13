@@ -1,7 +1,5 @@
 <?php
-/*
- * CnabPHP - Geração de arquivos de remessa e retorno em PHP
- */
+/* CnabPHP - Geração de arquivos de remessa e retorno em PHP */
 
 namespace CnabPHP\resources\B033\remessa\cnab400;
 
@@ -47,7 +45,7 @@ class Registro0 extends Generico0
 
         'codigo_transmissao' => array(
             'tamanho' => 20,
-            'default' => '',
+            'default' => ' ',
             'tipo' => 'int',
             'required' => true
         ),
@@ -75,7 +73,7 @@ class Registro0 extends Generico0
 
         'data_geracao_arquivo' => array(
             'tamanho' => 6,
-            'default' => '',
+            'default' => ' ',
             'tipo' => 'date',
             'required' => true
         ),
@@ -89,35 +87,35 @@ class Registro0 extends Generico0
 
         'mensagem_1' => array(
             'tamanho' => 47,
-            'default' => '',
+            'default' => ' ',
             'tipo' => 'alfa',
             'required' => true
         ),
 
         'mensagem_2' => array(
             'tamanho' => 47,
-            'default' => '',
+            'default' => ' ',
             'tipo' => 'alfa',
             'required' => true
         ),
 
         'mensagem_3' => array(
             'tamanho' => 47,
-            'default' => '',
+            'default' => ' ',
             'tipo' => 'alfa',
             'required' => true
         ),
 
         'mensagem_4' => array(
             'tamanho' => 47,
-            'default' => '',
+            'default' => ' ',
             'tipo' => 'alfa',
             'required' => true
         ),
 
         'mensagem_5' => array(
             'tamanho' => 47,
-            'default' => '',
+            'default' => ' ',
             'tipo' => 'alfa',
             'required' => true
         ),
@@ -138,7 +136,7 @@ class Registro0 extends Generico0
 
         'numero_sequencial_arquivo' => array(
             'tamanho' => 3,
-            'default' => '',
+            'default' => ' ',
             'tipo' => 'int',
             'required' => true
         ),

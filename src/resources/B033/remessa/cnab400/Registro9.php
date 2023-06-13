@@ -15,14 +15,14 @@ class Registro9 extends Generico1
 
         'qtd_registros' => array(
             'tamanho' => 6,
-            'default' => '',
+            'default' => ' ',
             'tipo' => 'int',
             'required' => true
         ),
 
         'valor_total_boletos' => array(
             'tamanho' => 11,
-            'default' => '',
+            'default' => ' ',
             'tipo' => 'int',
             'required' => true
         ),
@@ -36,7 +36,7 @@ class Registro9 extends Generico1
 
         'numero_sequencial_registro_arquivo' => array(
             'tamanho' => 6,
-            'default' => '',
+            'default' => ' ',
             'tipo' => 'int',
             'required' => true
         ),
