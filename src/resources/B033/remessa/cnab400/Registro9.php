@@ -1,9 +1,9 @@
 <?php
 namespace CnabPHP\resources\B033\remessa\cnab400;
 
-use CnabPHP\resources\generico\remessa\cnab400\Generico1;
+use CnabPHP\resources\generico\remessa\cnab400\Generico9;
 
-class Registro9 extends Generico1
+class Registro9 extends Generico9
 {
     protected $meta = array(
         'codigo_registro' => array(
@@ -35,7 +35,7 @@ class Registro9 extends Generico1
             'required' => true
         ),
 
-        'numero_sequencial_registro_arquivo' => array(
+        'numero_registro' => array(
             'tamanho' => 6,
             'default' => '0',
             'tipo' => 'int',

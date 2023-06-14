@@ -328,14 +328,14 @@ class Registro1 extends Generico1
 
         'identificador_complemento' => array(
             'tamanho' => 1,
-            'default' => ' ',
+            'default' => 'I',
             'tipo' => 'alfa',
             'required' => true
         ),
 
         'complemento' => array(
             'tamanho' => 2,
-            'default' => ' ',
+            'default' => '0',
             'tipo' => 'int',
             'required' => true
         ),
@@ -361,7 +361,7 @@ class Registro1 extends Generico1
             'required' => true
         ),
 
-        'numero_sequencial_registro_arquivo' => array(
+        'numero_registro' => array(
             'tamanho' => 6,
             'default' => '0',
             'tipo' => 'int',
