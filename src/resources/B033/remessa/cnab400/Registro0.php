@@ -134,9 +134,9 @@ class Registro0 extends Generico0
             'required' => true
         ),
 
-        'numero_sequencial_arquivo' => array(
+        'numero_seq_arquivo' => array(
             'tamanho' => 3,
-            'default' => ' ',
+            'default' => '0',
             'tipo' => 'int',
             'required' => true
         ),

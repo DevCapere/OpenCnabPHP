@@ -284,7 +284,7 @@ class Registro1 extends Generico1
             'required' => true
         ),
 
-        'cep_pagador' => array(
+        'prefixo_cep_pagador' => array(
             'tamanho' => 5,
             'default' => ' ',
             'tipo' => 'int',
@@ -363,7 +363,7 @@ class Registro1 extends Generico1
 
         'numero_sequencial_registro_arquivo' => array(
             'tamanho' => 6,
-            'default' => ' ',
+            'default' => '0',
             'tipo' => 'int',
             'required' => true
         ),
