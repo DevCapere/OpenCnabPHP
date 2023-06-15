@@ -18,35 +18,35 @@ class Registro1 extends Generico1
         ),
 
         //01 = CPF, 02 = CNPJ 
-        'tipo_inscricao_beneficiario' => array(
+        'tipo_inscricao' => array(
             'tamanho' => 2,
             'default' => ' ',
             'tipo' => 'int',
             'required' => true
         ),
 
-        'numero_inscricao_beneficiario' => array(
+        'numero_inscricao' => array(
             'tamanho' => 14,
             'default' => ' ',
             'tipo' => 'int',
             'required' => true
         ),
 
-        'codigo_agencia_beneficiario' => array(
+        'agencia' => array(
             'tamanho' => 4,
             'default' => ' ',
             'tipo' => 'int',
             'required' => true
         ),
 
-        'conta_movimento_beneficiario' => array(
+        'conta' => array(
             'tamanho' => 8,
             'default' => ' ',
             'tipo' => 'int',
             'required' => true
         ),
 
-        'conta_cobranca_beneficiario' => array(
+        'conta_cobranca' => array(
             'tamanho' => 8,
             'default' => ' ',
             'tipo' => 'int',
@@ -60,7 +60,7 @@ class Registro1 extends Generico1
             'required' => false
         ),
 
-        'identificacao_boleto_banco' => array(
+        'nosso_numero' => array(
             'tamanho' => 8,
             'default' => ' ',
             'tipo' => 'int',
@@ -249,14 +249,14 @@ class Registro1 extends Generico1
             'required' => true
         ),
 
-        'tipo_inscricao' => array(
+        'tipo_inscricao_pagador' => array(
             'tamanho' => 2,
             'default' => ' ',
             'tipo' => 'int',
             'required' => true
         ),
 
-        'numero_inscricao' => array(
+        'numero_inscricao_pagador' => array(
             'tamanho' => 14,
             'default' => ' ',
             'tipo' => 'int',

@@ -71,7 +71,7 @@ class Registro0 extends Generico0
             'required' => true
         ),
 
-        'data_geracao_arquivo' => array(
+        'data_gravacao' => array(
             'tamanho' => 6,
             'default' => ' ',
             'tipo' => 'date',
@@ -134,7 +134,7 @@ class Registro0 extends Generico0
             'required' => true
         ),
 
-        'numero_seq_arquivo' => array(
+        'numero_sequencial_arquivo' => array(
             'tamanho' => 3,
             'default' => '0',
             'tipo' => 'int',
