@@ -20,35 +20,35 @@ class Registro1 extends Generico1
         //01 = CPF, 02 = CNPJ 
         'tipo_inscricao' => array(
             'tamanho' => 2,
-            'default' => ' ',
+            'default' => '0',
             'tipo' => 'int',
             'required' => true
         ),
 
         'numero_inscricao' => array(
             'tamanho' => 14,
-            'default' => ' ',
+            'default' => '0',
             'tipo' => 'int',
             'required' => true
         ),
 
         'agencia' => array(
             'tamanho' => 4,
-            'default' => ' ',
+            'default' => '0',
             'tipo' => 'int',
             'required' => true
         ),
 
         'conta' => array(
             'tamanho' => 8,
-            'default' => ' ',
+            'default' => '0',
             'tipo' => 'int',
             'required' => true
         ),
 
         'conta_cobranca' => array(
             'tamanho' => 8,
-            'default' => ' ',
+            'default' => '0',
             'tipo' => 'int',
             'required' => true
         ),
@@ -62,14 +62,14 @@ class Registro1 extends Generico1
 
         'nosso_numero' => array(
             'tamanho' => 8,
-            'default' => ' ',
+            'default' => '0',
             'tipo' => 'int',
             'required' => true
         ),
 
         'data_desconto_2' => array(
             'tamanho' => 6,
-            'default' => ' ',
+            'default' => '0',
             'tipo' => 'date',
             'required' => true
         ),
@@ -83,14 +83,14 @@ class Registro1 extends Generico1
 
         'codigo_multa' => array(
             'tamanho' => 1,
-            'default' => ' ',
+            'default' => '0',
             'tipo' => 'int',
             'required' => true
         ),
 
         'percentual_multa' => array(
             'tamanho' => 2,
-            'default' => ' ',
+            'default' => '0',
             'tipo' => 'decimal',
             'precision' => 2,
             'required' => true
@@ -105,7 +105,7 @@ class Registro1 extends Generico1
 
         'valor_boleto_outra_unidade' => array(
             'tamanho' => 8,
-            'default' => ' ',
+            'default' => '0',
             'tipo' => 'decimal',
             'precision' => 5,
             'required' => true
@@ -120,21 +120,21 @@ class Registro1 extends Generico1
 
         'data_multa' => array(
             'tamanho' => 6,
-            'default' => ' ',
+            'default' => '0',
             'tipo' => 'date',
             'required' => true
         ),
 
         'tipo_cobranca' => array(
             'tamanho' => 1,
-            'default' => ' ',
+            'default' => '0',
             'tipo' => 'int',
             'required' => true
         ),
 
         'codigo_movimento_remessa' => array(
             'tamanho' => 2,
-            'default' => ' ',
+            'default' => '0',
             'tipo' => 'int',
             'required' => true
         ),
@@ -148,14 +148,14 @@ class Registro1 extends Generico1
 
         'data_vencimento' => array(
             'tamanho' => 6,
-            'default' => ' ',
+            'default' => '0',
             'tipo' => 'date',
             'required' => true
         ),
 
         'valor' => array(
             'tamanho' => 11,
-            'default' => ' ',
+            'default' => '0',
             'tipo' => 'decimal',
             'precision' => 2,
             'required' => true
@@ -170,14 +170,14 @@ class Registro1 extends Generico1
 
         'codigo_agencia_cobradora' => array(
             'tamanho' => 5,
-            'default' => ' ',
+            'default' => '0',
             'tipo' => 'int',
             'required' => true
         ),
 
         'especie_titulo' => array(
             'tamanho' => 2,
-            'default' => ' ',
+            'default' => '0',
             'tipo' => 'int',
             'required' => true
         ),
@@ -191,28 +191,28 @@ class Registro1 extends Generico1
 
         'data_emissao' => array(
             'tamanho' => 6,
-            'default' => ' ',
+            'default' => '0',
             'tipo' => 'date',
             'required' => true
         ),
 
         'primeira_instrucao' => array(
             'tamanho' => 2,
-            'default' => ' ',
+            'default' => '0',
             'tipo' => 'int',
             'required' => true
         ),
 
         'segunda_instrucao' => array(
             'tamanho' => 2,
-            'default' => ' ',
+            'default' => '0',
             'tipo' => 'int',
             'required' => true
         ),
 
         'valor_mora_dia' => array(
             'tamanho' => 11,
-            'default' => ' ',
+            'default' => '0',
             'tipo' => 'decimal',
             'precision' => 2,
             'required' => true
@@ -220,14 +220,14 @@ class Registro1 extends Generico1
 
         'data_limite_concessao_desconto' => array(
             'tamanho' => 6,
-            'default' => ' ',
+            'default' => '0',
             'tipo' => 'date',
             'required' => true
         ),
 
         'valor_desconto_concedido' => array(
             'tamanho' => 11,
-            'default' => ' ',
+            'default' => '0',
             'tipo' => 'decimal',
             'precision' => 2,
             'required' => true
@@ -235,7 +235,7 @@ class Registro1 extends Generico1
 
         'percentual_iof_recolhido' => array(
             'tamanho' => 8,
-            'default' => ' ',
+            'default' => '0',
             'tipo' => 'decimal',
             'precision' => 5,
             'required' => true
@@ -243,7 +243,7 @@ class Registro1 extends Generico1
 
         'valor_abatimento' => array(
             'tamanho' => 11,
-            'default' => ' ',
+            'default' => '0',
             'tipo' => 'decimal',
             'precision' => 2,
             'required' => true
@@ -251,14 +251,14 @@ class Registro1 extends Generico1
 
         'tipo_inscricao_pagador' => array(
             'tamanho' => 2,
-            'default' => ' ',
+            'default' => '0',
             'tipo' => 'int',
             'required' => true
         ),
 
         'numero_inscricao_pagador' => array(
             'tamanho' => 14,
-            'default' => ' ',
+            'default' => '0',
             'tipo' => 'int',
             'required' => true
         ),
@@ -286,14 +286,14 @@ class Registro1 extends Generico1
 
         'prefixo_cep_pagador' => array(
             'tamanho' => 5,
-            'default' => ' ',
+            'default' => '0',
             'tipo' => 'int',
             'required' => true
         ),
 
         'sufixo_cep_pagador' => array(
             'tamanho' => 3,
-            'default' => ' ',
+            'default' => '0',
             'tipo' => 'int',
             'required' => true
         ),
@@ -349,7 +349,7 @@ class Registro1 extends Generico1
 
         'numero_dias_protesto' => array(
             'tamanho' => 2,
-            'default' => ' ',
+            'default' => '0',
             'tipo' => 'int',
             'required' => true
         ),
