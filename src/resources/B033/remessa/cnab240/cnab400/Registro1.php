@@ -53,7 +53,7 @@ class Registro1 extends Generico1
             'required' => true
         ),
 
-        'identificacao_boleto_empresa' => array(
+        'seu_numero' => array(
             'tamanho' => 25,
             'default' => ' ',
             'tipo' => 'alfa',
