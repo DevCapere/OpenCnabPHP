@@ -39,14 +39,14 @@ class Registro1 extends Generico1
             'required' => true
         ),
 
-        'conta' => array(
+        'conta_cobranca' => array(
             'tamanho' => 8,
             'default' => '0',
             'tipo' => 'int',
             'required' => true
         ),
 
-        'conta_cobranca' => array(
+        'conta' => array(
             'tamanho' => 8,
             'default' => '0',
             'tipo' => 'int',
@@ -328,15 +328,15 @@ class Registro1 extends Generico1
 
         'identificador_complemento' => array(
             'tamanho' => 1,
-            'default' => 'I',
+            'default' => ' ',
             'tipo' => 'alfa',
             'required' => true
         ),
 
         'complemento' => array(
             'tamanho' => 2,
-            'default' => '0',
-            'tipo' => 'int',
+            'default' => ' ',
+            'tipo' => 'alfa',
             'required' => true
         ),
 
@@ -387,27 +387,6 @@ class Registro1 extends Generico1
     protected function set_endereco_pagador($value)
     {
         $this->data['endereco_pagador'] = $value . " " . $this->entryData['bairro_pagador'];
-    }
-
-    protected function set_taxa_multa($value)
-    {
-        $this->data['taxa_multa'] = $value;
-        $this->data['codigo_multa'] = ($value > 0) ? 2 : 0;
-    }
-
-    protected function set_nosso_numero_dv($value)
-    {
-        $modulo11 = self::modulo11(str_pad($this->entryData['carteira_banco'], 2, 0, STR_PAD_LEFT) . str_pad($this->data['nosso_numero'], 11, 0, STR_PAD_LEFT), 7);
-        switch ($modulo11['resto']) {
-            case 1:
-                $this->data['nosso_numero_dv'] = 'P';
-                break;
-            case 0:
-                $this->data['nosso_numero_dv'] = " 0";
-                break;
-            default:
-                $this->data['nosso_numero_dv'] = $modulo11['digito'];
-        }
     }
 
     protected static function modulo11($num, $base = 9)
