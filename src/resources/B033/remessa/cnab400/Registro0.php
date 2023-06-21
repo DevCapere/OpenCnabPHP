@@ -46,7 +46,7 @@ class Registro0 extends Generico0
         'codigo_transmissao' => array(
             'tamanho' => 20,
             'default' => ' ',
-            'tipo' => 'int',
+            'tipo' => 'alfa',
             'required' => true
         ),
 
