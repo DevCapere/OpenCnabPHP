@@ -43,10 +43,31 @@ class Registro0 extends Generico0
             'required' => true
         ),
 
-        'codigo_transmissao' => array(
-            'tamanho' => 20,
-            'default' => ' ',
-            'tipo' => 'alfa',
+        // 'codigo_transmissao' => array(
+        //     'tamanho' => 20,
+        //     'default' => ' ',
+        //     'tipo' => 'alfa',
+        //     'required' => true
+        // ),
+        
+        'agencia' => array( // codigo_transmissao(1, 4)
+            'tamanho' => 4,
+            'default' => '0',
+            'tipo' => 'int',
+            'required' => true
+        ),
+
+        'conta_cobranca' => array( // codigo_transmissao(5, 12)
+            'tamanho' => 8,
+            'default' => '0',
+            'tipo' => 'int',
+            'required' => true
+        ),
+
+        'conta' => array( // codigo_transmissao(13, 20)
+            'tamanho' => 8,
+            'default' => '0',
+            'tipo' => 'int',
             'required' => true
         ),
 
