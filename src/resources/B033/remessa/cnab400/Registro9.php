@@ -55,10 +55,10 @@ class Registro9 extends Generico9
         $total = 0;
         foreach ($lote->children as $registro) {
             if ($registro instanceof Registro1) {
-                $total += $registro->valor;
+                $total += $registro->valor; // Valor Centavos
             }
         }
-        $this->data['valor_total_boletos'] = $total;
+        $this->data['valor_total_boletos'] = $total / 100; // Dividir por 100 para converter valor de centavos para real
 
     }
 }
