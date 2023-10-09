@@ -100,9 +100,22 @@ class Registro1 extends Generico1
             'tamanho'=>8,
             'default'=>'',
             'tipo'=>'alfa',
-            'required'=>true),
+            'required'=>true
+        ),
+        'codigo_original_remessa' => array(
+            'tamanho'   => 2,
+            'default'   => '',
+            'tipo'      => 'alfa',
+            'required'  => true
+        ),
+        'erros_mensagens' => array(
+            'tamanho'   => 9,
+            'default'   => '',
+            'tipo'      => 'alfa',
+            'required'  => true
+        ),
         'filler42'=>array(            //20.3
-            'tamanho'=>12,
+            'tamanho'=>1,
             'default'=>'',
             'tipo'=>'alfa',
             'required'=>true),
