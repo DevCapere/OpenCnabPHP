@@ -56,6 +56,14 @@ abstract class RegistroRetAbstract extends RegistroAbstract
         }
     }
 
+    public function __isset(string $prop): bool {
+        if (method_exists($this, 'get_' . $prop)) {
+            return TRUE;
+        } else {
+            return isset($this->data[$prop]);
+        }
+    }
+
     /**
      * método __set()
      * executado sempre que uma propriedade for atribuÃ­da.
