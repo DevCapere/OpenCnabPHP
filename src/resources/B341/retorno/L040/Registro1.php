@@ -154,7 +154,7 @@ class Registro1 extends Generico1
 	public function __construct($linhaTxt)
 	{
 		parent::__construct($linhaTxt);
-		$this->inserirDetalhe();
+		$this->inserirDetalhe($linhaTxt);
 	}
 	/*
 	* m�todo inserirDetalhe()
@@ -162,7 +162,7 @@ class Registro1 extends Generico1
 	* @$data = um array contendo os dados nessesarios para o arquvio
 	*/
 	public function inserirDetalhe($linhaTxt){
-		while($this->data['codigo_lote']==abs(substr(RetornoAbstract::$lines[RetornoAbstract::$linesCounter],3,4)))
+		while($this->data['codigo_lote']==abs((int) substr(RetornoAbstract::$lines[RetornoAbstract::$linesCounter],3,4)))
 		{
 			RetornoAbstract::$linesCounter++;
 			$class = 'CnabPHP\resources\\'.RetornoAbstract::$banco.'\retorno\\'.RetornoAbstract::$layout.'\Registro3T';
