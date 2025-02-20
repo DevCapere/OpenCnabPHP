@@ -68,6 +68,10 @@ abstract class RetornoAbstract
         self::$layout = "L" . $layout_versao;
         $class = 'CnabPHP\resources\\B' . self::$banco . '\retorno\\' . self::$layout . '\Registro0';
 
+        if (!class_exists($class)) {
+            throw new Exception('O layout ' . self::$layout . ' do banco ' . self::$banco . ' não foi homologado');
+        }
+
         self::$lines = $lines;
         $this->children[] = new $class($lines[0]);
 
