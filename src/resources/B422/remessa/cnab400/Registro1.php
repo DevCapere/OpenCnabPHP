@@ -95,7 +95,7 @@ class Registro1 extends Generico1
         'data_vencimento' => array( // 121-126
             'tamanho' => 6,
             'default' => '',
-            'tipo' => 'date',
+            'tipo' => 'alfa',
             'required' => true
         ),
         'valor' => array(          // 127-139 13 dígitos (valor em centavos)
@@ -131,7 +131,7 @@ class Registro1 extends Generico1
         'data_emissao' => array(   // Posições 151-156
             'tamanho' => 6,
             'default' => '',
-            'tipo' => 'date',
+            'tipo' => 'alfa',
             'required' => true
         ),
         'primeira_instrucao' => array( // Posições 157-158
@@ -305,31 +305,65 @@ class Registro1 extends Generico1
     }
 
     protected function set_data_emissao($value) {
-        if ($value && preg_match('/^\d{4}-\d{2}-\d{2}/', $value)) {
-            $date = \DateTime::createFromFormat('Y-m-d', $value);
-            if ($date) {
-                $this->data['data_emissao'] = $date->format('dmy');
+        if ($value instanceof \DateTime) {
+            $this->data['data_emissao'] = $value->format('dmy');
+
+            return;
+        }
+
+        if (empty($value)) {
+            if (isset($this->data['data_vencimento'])) {
+                $this->data['data_emissao'] = $this->data['data_vencimento'];
+                return;
             }
-        } else {
+        }
+
+        if (is_string($value) && preg_match('/^\d{6}$/', $value)) {
             $this->data['data_emissao'] = $value;
+            return;
+        }
+
+        if (is_string($value)) {
+            try {
+                $date = new \DateTime($value);
+                $this->data['data_emissao'] = $date->format('dmy');
+                return;
+            } catch (\Exception $e) {}
         }
     }
 
     protected function set_data_vencimento($value) {
-        if ($value) {
-            if (preg_match('/^\d{2}\/\d{2}\/\d{4}/', $value)) {
-                $date = \DateTime::createFromFormat('d/m/Y', $value);
-                if ($date) {
-                    $this->data['data_vencimento'] = $date->format('dmy');
-                }
-            } elseif (preg_match('/^\d{4}-\d{2}-\d{2}/', $value)) {
-                $date = \DateTime::createFromFormat('Y-m-d', $value);
-                if ($date) {
-                    $this->data['data_vencimento'] = $date->format('dmy');
-                }
-            } else {
-                $this->data['data_vencimento'] = $value;
+        if (is_string($value) && preg_match('/^\d{6}$/', $value)) {
+            $this->data['data_vencimento'] = $value;
+            return;
+        }
+
+        if ($value instanceof \DateTime) {
+            $this->data['data_vencimento'] = $value->format('dmy');
+            return;
+        }
+
+        if (is_string($value) && preg_match('/^\d{2}\/\d{2}\/\d{4}/', $value)) {
+            $date = \DateTime::createFromFormat('d/m/Y', $value);
+            if ($date) {
+                $this->data['data_vencimento'] = $date->format('dmy');
+                return;
             }
+        }
+
+        if (is_string($value) && preg_match('/^\d{4}-\d{2}-\d{2}/', $value)) {
+            $date = \DateTime::createFromFormat('Y-m-d', $value);
+            if ($date) {
+                $this->data['data_vencimento'] = $date->format('dmy');
+                return;
+            }
+        }
+
+        if (is_numeric($value)) {
+            $date = new \DateTime();
+            $date->setTimestamp($value);
+            $this->data['data_vencimento'] = $date->format('dmy');
+            return;
         }
     }
 
