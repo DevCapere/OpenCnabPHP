@@ -154,8 +154,8 @@ class Registro1 extends Generico1
         ),
         'data_limite_desconto' => array( // Posições 174-179
             'tamanho' => 6,
-            'default' => '0',
-            'tipo' => 'date',
+            'default' => '000000',
+            'tipo' => 'alfa',
             'required' => true
         ),
         'valor_desconto' => array( // Posições 180-192 (13 dígitos)
@@ -236,9 +236,15 @@ class Registro1 extends Generico1
             'tipo' => 'alfa',
             'required' => true
         ),
-        'filler5' => array(        // Posições 382-388
-            'tamanho' => 7,    // Ajustado para totalizar 400 chars
+        'filler5' => array(        // Posições 382-386
+            'tamanho' => 6,    // Ajustado para totalizar 400 chars
             'default' => ' ',
+            'tipo' => 'alfa',
+            'required' => true
+        ),
+        'indicador_tipo_desconto' => array(  // Posições 387-388
+            'tamanho' => 1,
+            'default' => '0',
             'tipo' => 'alfa',
             'required' => true
         ),
@@ -265,14 +271,9 @@ class Registro1 extends Generico1
     public function __construct($data = null)
     {
         parent::__construct($data);
-
-        // Garantir que o sequencial seja calculado corretamente
         $this->set_numero_sequencial(null);
     }
 
-    /**
-     * Garantir campos obrigatórios para Safra usando padrão OpenCnabPHP
-     */
     protected function set_codigo_banco_cobrador($value) {
         $this->data['codigo_banco_cobrador'] = '422';
     }
@@ -289,6 +290,18 @@ class Registro1 extends Generico1
         }
 
         $this->data['identificacao_carteira'] = $value;
+    }
+
+    protected function set_indicador_tipo_desconto($value)
+    {
+        $validos = ['0', '1', '2', '3', '5'];
+        $value = strval($value);
+
+        if (!in_array($value, $validos)) {
+            $value = '0';
+        }
+
+        $this->data['indicador_tipo_desconto'] = $value;
     }
 
     protected function set_data_emissao($value) {
@@ -337,6 +350,17 @@ class Registro1 extends Generico1
         }
     }
 
+    protected function set_empresa_banco($value)
+    {
+        $lote = RemessaAbstract::getLote(0);
+        if ($lote && isset($lote->data['codigo_cedente'])) {
+            $codigoCedenteHeader = $lote->data['codigo_cedente'];
+            $this->data['empresa_banco'] = str_pad($codigoCedenteHeader, 14, '0', STR_PAD_LEFT);
+        } else {
+            $this->data['empresa_banco'] = str_pad($value, 14, '0', STR_PAD_LEFT);
+        }
+    }
+
     protected function set_sequencial_registro($value) {
         $lote = RemessaAbstract::getLote(0);
         $sequencial = 2;
@@ -352,5 +376,36 @@ class Registro1 extends Generico1
         }
 
         $this->data['sequencial_registro'] = str_pad($sequencial, 6, '0', STR_PAD_LEFT);
+    }
+
+    protected function set_data_limite_desconto($value)
+    {
+        if ($value === '000000' || $value === '0' || empty($value)) {
+            $this->data['data_limite_desconto'] = '000000';
+            return;
+        }
+
+        if (preg_match('/^\d{6}$/', $value)) {
+            $this->data['data_limite_desconto'] = $value;
+            return;
+        }
+
+        if (preg_match('/^\d{2}\/\d{2}\/\d{4}/', $value)) {
+            $date = \DateTime::createFromFormat('d/m/Y', $value);
+            if ($date) {
+                $this->data['data_limite_desconto'] = $date->format('dmy');
+                return;
+            }
+        }
+
+        if (preg_match('/^\d{4}-\d{2}-\d{2}/', $value)) {
+            $date = \DateTime::createFromFormat('Y-m-d', $value);
+            if ($date) {
+                $this->data['data_limite_desconto'] = $date->format('dmy');
+                return;
+            }
+        }
+
+        $this->data['data_limite_desconto'] = '000000';
     }
 }
