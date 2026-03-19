@@ -27,9 +27,9 @@ class Registro1 extends Generico1 {
             'tipo' => 'alfa',
             'required' => true
         ),
-        'tipo_impressao' => array( // fixo 'A' para impressão normal, aparentemente só usado se for impressão pelo banco
+        'tipo_impressao' => array( // fixo 'B' para impressão normal, aparentemente só usado se for impressão pelo banco
             'tamanho' => 1,
-            'default' => 'A',
+            'default' => 'B',
             'tipo' => 'alfa',
             'required' => true
         ),
@@ -329,7 +329,7 @@ class Registro1 extends Generico1 {
             $this->children[] = new $class($data);
         }
     }
-   
+
     public function set_emissao_boleto($value) {
         $this->data['emissao_boleto'] = $value == "B" ? "B" : "A";  // 1 igual A =  emissão pelo banco 2 igual B = emissão pelo cedente
     }
@@ -357,32 +357,33 @@ class Registro1 extends Generico1 {
     }
 
     protected static function modulo11($num, $base = 9) {
-        $fator = 2;
-
         $soma = 0;
-        // Separacao dos numeros.
-        for ($i = strlen($num); $i > 0; $i--) {
-            //  Pega cada numero isoladamente.
-            $numeros[$i] = substr($num, $i - 1, 1);
-            //  Efetua multiplicacao do numero pelo falor.
-            $parcial[$i] = $numeros[$i] * $fator;
-            //  Soma dos digitos.
-            $soma += $parcial[$i];
-            if ($fator == $base) {
-                //  Restaura fator de multiplicacao para 2.
-                $fator = 1;
+        $peso = 2;
+
+        for ($i = strlen($num) - 1; $i >= 0; $i--) {
+            $soma += (int)$num[$i] * $peso;
+            $peso++;
+            if ($peso > 9) {
+                $peso = 2;
             }
-            $fator++;
         }
-        $result = array(
-            'digito' => ($soma * 10) % 11,
-            // Remainder.
-            'resto' => $soma % 11,
+
+        $resto = $soma % 11;
+
+        if ($resto == 0 || $resto == 1) {
+            $digito = 0;
+        } else {
+            $digito = 11 - $resto;
+        }
+
+        if ($digito == 10 || $digito == 11) {
+            $digito = 0;
+        }
+
+        return array(
+            'digito' => $digito,
+            'resto' => $resto,
         );
-        if ($result['digito'] == 10) {
-            $result['digito'] = 0;
-        }
-        return $result;
     }
 
 }
