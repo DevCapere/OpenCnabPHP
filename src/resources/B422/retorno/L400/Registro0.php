@@ -128,4 +128,19 @@ class Registro0 extends Generico0
             'required' => true
         ),
     );
+
+    public function __construct($linhaTxt)
+    {
+        parent::__construct($linhaTxt);
+        RetornoAbstract::$linesCounter++;
+        $this->inserirDetalhe();
+    }
+
+    public function inserirDetalhe()
+    {
+        while (RetornoAbstract::$linesCounter < (count(RetornoAbstract::$lines) - 2)) {
+            $class = 'CnabPHP\resources\\B' . RetornoAbstract::$banco . '\retorno\\' . RetornoAbstract::$layout . '\Registro1';
+            $this->children[] = new $class(RetornoAbstract::$lines[RetornoAbstract::$linesCounter]);
+        }
+    }
 }
