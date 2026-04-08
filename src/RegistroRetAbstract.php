@@ -92,7 +92,10 @@ abstract class RegistroRetAbstract extends RegistroAbstract
                     $this->data[$prop] = $retorno;
                     break;
                 case 'date':
-                    if ($metaData['required']) {
+                    $rawValue = trim($value);
+                    $isValidDate = !empty($rawValue) && (int)$rawValue > 0;
+
+                    if ($metaData['required'] || $isValidDate) {
                         if ($metaData['tamanho'] == 6) {
                             $data = \DateTime::createFromFormat('dmy', sprintf('%06d', $value));
                         } elseif ($metaData['tamanho'] == 8) {
@@ -101,7 +104,7 @@ abstract class RegistroRetAbstract extends RegistroAbstract
                             throw new \InvalidArgumentException("Tamanho do campo {$prop} inválido");
                         }
 
-                        $this->data[$prop] = $data->format('Y-m-d');
+                        $this->data[$prop] = ($data !== false) ? $data->format('Y-m-d') : '';
                     } else {
                         $this->data[$prop] = '';
                     }
