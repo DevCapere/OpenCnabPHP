@@ -138,7 +138,12 @@ class Registro0 extends Generico0
 
     public function inserirDetalhe()
     {
-        while (RetornoAbstract::$linesCounter < (count(RetornoAbstract::$lines) - 2)) {
+        // Usa array_filter para remover a linha vazia final (trailing newline),
+        // garantindo que o loop processe todos os registros de detalhe mesmo
+        // quando o arquivo não possui newline no final.
+        $linhasFiltradas = array_filter(RetornoAbstract::$lines);
+        $totalLinhas = count($linhasFiltradas);
+        while (RetornoAbstract::$linesCounter < ($totalLinhas - 1)) {
             $class = 'CnabPHP\resources\\B' . RetornoAbstract::$banco . '\retorno\\' . RetornoAbstract::$layout . '\Registro1';
             $this->children[] = new $class(RetornoAbstract::$lines[RetornoAbstract::$linesCounter]);
         }
