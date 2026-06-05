@@ -118,6 +118,18 @@ class Registro0 extends Generico0
         RetornoAbstract::$linesCounter++;
         $this->inserirDetalhe();
     }
+
+    // Sicredi usa AAAAMMDD (Ymd) para data_gravacao, não dmY como o padrão da lib
+    public function set_data_gravacao($value)
+    {
+        $rawValue = trim($value);
+        if (empty($rawValue) || (int)$rawValue === 0) {
+            $this->data['data_gravacao'] = '';
+            return;
+        }
+        $data = \DateTime::createFromFormat('Ymd', sprintf('%08d', $rawValue));
+        $this->data['data_gravacao'] = ($data !== false) ? $data->format('Y-m-d') : '';
+    }
     public function inserirDetalhe()
     {
         while(RetornoAbstract::$linesCounter < (count(RetornoAbstract::$lines)-2))

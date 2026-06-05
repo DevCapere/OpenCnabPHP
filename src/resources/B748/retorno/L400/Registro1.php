@@ -249,6 +249,18 @@ class Registro1 extends Generico1 {
         //$this->inserirDetalhe();
     }
 
+    // Sicredi usa AAAAMMDD (Ymd) para data_credito, não dmY como o padrão da lib
+    public function set_data_credito($value)
+    {
+        $rawValue = trim($value);
+        if (empty($rawValue) || (int)$rawValue === 0) {
+            $this->data['data_credito'] = '';
+            return;
+        }
+        $data = \DateTime::createFromFormat('Ymd', sprintf('%08d', $rawValue));
+        $this->data['data_credito'] = ($data !== false) ? $data->format('Y-m-d') : '';
+    }
+
     /*
       metodo get_R3U
       metodo que espõe esse registro como se fosse o R3U da caixa
