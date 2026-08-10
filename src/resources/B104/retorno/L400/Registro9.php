@@ -36,6 +36,7 @@ class Registro9 extends Generico9
 {
     // Campos de outros bancos nao existentes neste layout; declarados para
     // evitar warning de propriedade indefinida no parseRetorno padrao.
+    public $filler2;
     public $filler3;
     public $qtd_registros;
     public $codigo_lote;
