@@ -141,9 +141,13 @@ class Registro0 extends Generico0
 
     public function inserirDetalhe()
     {
-        while (RetornoAbstract::$linesCounter < (count(RetornoAbstract::$lines) - 2)) {
-            $class = 'CnabPHP\resources\\B' . RetornoAbstract::$banco . '\retorno\\' . RetornoAbstract::$layout . '\Registro1';
-            $this->children[] = new $class(RetornoAbstract::$lines[RetornoAbstract::$linesCounter]);
+        $lines = array_values(array_filter(RetornoAbstract::$lines, static function ($line) {
+            return trim($line) !== '';
+        }));
+        $lastDetail = count($lines) - 2;
+        $class = 'CnabPHP\resources\\B' . RetornoAbstract::$banco . '\retorno\\' . RetornoAbstract::$layout . '\Registro1';
+        while (RetornoAbstract::$linesCounter <= $lastDetail) {
+            $this->children[] = new $class($lines[RetornoAbstract::$linesCounter]);
         }
     }
 }
