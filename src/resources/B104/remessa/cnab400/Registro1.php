@@ -91,10 +91,11 @@ class Registro1 extends Generico1
             'default' => ' ',
             'tipo' => 'alfa',
             'required' => true),
-        'uso_livre' => array( // Pos: 076-076 - NE055 (0 nao autoriza / 2 autoriza pagamento parcial)
+        // NE055: '1' ou branco = nao autoriza; '2' = autoriza. Valor '0' e rejeitado pela Caixa.
+        'uso_livre' => array( // Pos: 076-076 - NE055 (autorizacao pagamento parcial/divergente)
             'tamanho' => 1,
-            'default' => '0',
-            'tipo' => 'int',
+            'default' => ' ',
+            'tipo' => 'alfa',
             'required' => true),
         'codigo_juros' => array( // Pos: 077-077 - NE066
             'tamanho' => 1,

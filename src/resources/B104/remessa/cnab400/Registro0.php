@@ -95,13 +95,10 @@ class Registro0 extends Generico0
             'default' => '',
             'tipo' => 'date',
             'required' => true),
-        'versao_layout' => array( // Pos: 101-103 - NE065
-            'tamanho' => 3,
-            'default' => '030',
-            'tipo' => 'int',
-            'required' => true),
-        'uso_exclusivo2' => array( // Pos: 104-389 - Uso exclusivo CAIXA (brancos)
-            'tamanho' => 286,
+        // Manual 67.126: pos 101-389 = Uso Exclusivo CAIXA (brancos).
+        // Nao existe "versao_layout" 030 aqui — valor 030 foi rejeitado pela Caixa (SUS-3983).
+        'uso_exclusivo2' => array( // Pos: 101-389 - Uso exclusivo CAIXA (brancos)
+            'tamanho' => 289,
             'default' => ' ',
             'tipo' => 'alfa',
             'required' => true),
