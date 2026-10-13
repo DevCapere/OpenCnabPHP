@@ -56,9 +56,10 @@ class Registro1 extends Generico1
             'default' => '0',
             'tipo' => 'int',
             'required' => true),
-        'codigo_beneficiario' => array( // Pos: 021-027 - NE004
+        // Pos 021-027: zeros (NE004 da linha 2 fica em 031-037 — SUS-3983 / retorno Caixa)
+        'uso_exclusivo_benef' => array( // Pos: 021-027
             'tamanho' => 7,
-            'default' => '',
+            'default' => '0',
             'tipo' => 'int',
             'required' => true),
         'id_emissao' => array( // Pos: 028-028 - NE027 (1 Banco emite / 2 Cliente emite)
@@ -71,13 +72,19 @@ class Registro1 extends Generico1
             'default' => '1',
             'tipo' => 'int',
             'required' => true),
-        'taxa_permanencia' => array( // Pos: 030-031 - NE013 (Comissao de permanencia - zeros)
-            'tamanho' => 2,
+        'taxa_permanencia' => array( // Pos: 030-030 - NE013 (Comissao de permanencia - zero)
+            'tamanho' => 1,
             'default' => '0',
             'tipo' => 'int',
             'required' => true),
-        'seu_numero' => array( // Pos: 032-056 - NE014 (Identificacao do titulo na empresa)
-            'tamanho' => 25,
+        'codigo_beneficiario' => array( // Pos: 031-037 - NE004 (0 + CCCCCC)
+            'tamanho' => 7,
+            'default' => '',
+            'tipo' => 'int',
+            'required' => true),
+        // NE014 encolhido em 6 posicoes para manter uso_livre@076 e carteira@107-108 (linha 400)
+        'seu_numero' => array( // Pos: 038-056 - NE014 (Identificacao do titulo na empresa)
+            'tamanho' => 19,
             'default' => ' ',
             'tipo' => 'alfa',
             'required' => true),
@@ -91,10 +98,11 @@ class Registro1 extends Generico1
             'default' => ' ',
             'tipo' => 'alfa',
             'required' => true),
-        'uso_livre' => array( // Pos: 076-076 - NE055 (0 nao autoriza / 2 autoriza pagamento parcial)
+        // NE055: '1' ou branco = nao autoriza; '2' = autoriza. Valor '0' e rejeitado pela Caixa.
+        'uso_livre' => array( // Pos: 076-076 - NE055 (autorizacao pagamento parcial/divergente)
             'tamanho' => 1,
-            'default' => '0',
-            'tipo' => 'int',
+            'default' => '1',
+            'tipo' => 'alfa',
             'required' => true),
         'codigo_juros' => array( // Pos: 077-077 - NE066
             'tamanho' => 1,
@@ -294,8 +302,71 @@ class Registro1 extends Generico1
         $this->data['codigo_moeda'] = '1';
     }
 
+    /**
+     * Linha 2 pos 031-037 = 0 + CCCCCC (nao copia o header CCCCCC+0).
+     * Aceita valor do detalhe ou, se vazio, deriva do header.
+     */
     protected function set_codigo_beneficiario($value)
     {
-        $this->data['codigo_beneficiario'] = RemessaAbstract::getLote(0)->entryData['codigo_beneficiario'];
+        $raw = ($value !== null && $value !== '')
+            ? $value
+            : RemessaAbstract::getLote(0)->entryData['codigo_beneficiario'];
+        $codigo6 = self::extrairCodigoBeneficiario6($raw);
+        // tipo int + tamanho 7 → str_pad LEFT gera 0CCCCCC
+        $this->data['codigo_beneficiario'] = $codigo6;
+    }
+
+    /**
+     * Extrai os 6 digitos CCCCCC do cadastro / header / detalhe.
+     */
+    private static function extrairCodigoBeneficiario6($raw)
+    {
+        $digits = preg_replace('/\D/', '', (string) $raw);
+        if ($digits === '') {
+            return '000000';
+        }
+
+        if (strlen($digits) === 6) {
+            return $digits;
+        }
+
+        if (strlen($digits) === 7) {
+            // Detalhe ja formatado: 0 + CCCCCC
+            if ($digits[0] === '0') {
+                return substr($digits, 1, 6);
+            }
+            $base = substr($digits, 0, 6);
+            $ultimo = $digits[6];
+            // Com DV modulo 11 (ex.: 5188695)
+            if ($ultimo === self::modulo11DigitoBeneficiario($base)) {
+                return $base;
+            }
+            // Header formatado: CCCCCC + 0 (ex.: 5188690)
+            if ($ultimo === '0') {
+                return $base;
+            }
+            return $base;
+        }
+
+        if (strlen($digits) > 7) {
+            return substr($digits, -6);
+        }
+
+        return str_pad($digits, 6, '0', STR_PAD_LEFT);
+    }
+
+    private static function modulo11DigitoBeneficiario($numero)
+    {
+        $soma = 0;
+        $fator = 2;
+        for ($i = strlen($numero) - 1; $i >= 0; $i--) {
+            $soma += ((int) $numero[$i]) * $fator;
+            $fator = $fator >= 9 ? 2 : $fator + 1;
+        }
+        $resto = $soma % 11;
+        if ($resto === 0 || $resto === 1) {
+            return '0';
+        }
+        return (string) (11 - $resto);
     }
 }
