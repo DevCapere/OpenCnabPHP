@@ -56,10 +56,9 @@ class Registro1 extends Generico1
             'default' => '0',
             'tipo' => 'int',
             'required' => true),
-        // Pos 021-027: zeros (NE004 da linha 2 fica em 031-037 — SUS-3983 / retorno Caixa)
-        'uso_exclusivo_benef' => array( // Pos: 021-027
+        'codigo_beneficiario' => array( // Pos: 021-027 - NE004 (0 + CCCCCC) campo 05.1
             'tamanho' => 7,
-            'default' => '0',
+            'default' => '',
             'tipo' => 'int',
             'required' => true),
         'id_emissao' => array( // Pos: 028-028 - NE027 (1 Banco emite / 2 Cliente emite)
@@ -72,19 +71,13 @@ class Registro1 extends Generico1
             'default' => '1',
             'tipo' => 'int',
             'required' => true),
-        'taxa_permanencia' => array( // Pos: 030-030 - NE013 (Comissao de permanencia - zero)
-            'tamanho' => 1,
+        'taxa_permanencia' => array( // Pos: 030-031 - NE013 (Comissao de permanencia - zeros)
+            'tamanho' => 2,
             'default' => '0',
             'tipo' => 'int',
             'required' => true),
-        'codigo_beneficiario' => array( // Pos: 031-037 - NE004 (0 + CCCCCC)
-            'tamanho' => 7,
-            'default' => '',
-            'tipo' => 'int',
-            'required' => true),
-        // NE014 encolhido em 6 posicoes para manter uso_livre@076 e carteira@107-108 (linha 400)
-        'seu_numero' => array( // Pos: 038-056 - NE014 (Identificacao do titulo na empresa)
-            'tamanho' => 19,
+        'seu_numero' => array( // Pos: 032-056 - NE014 (Identificacao do titulo na empresa)
+            'tamanho' => 25,
             'default' => ' ',
             'tipo' => 'alfa',
             'required' => true),
@@ -303,7 +296,7 @@ class Registro1 extends Generico1
     }
 
     /**
-     * Linha 2 pos 031-037 = 0 + CCCCCC (nao copia o header CCCCCC+0).
+     * Linha 2 pos 021-027 (campo 05.1) = 0 + CCCCCC.
      * Aceita valor do detalhe ou, se vazio, deriva do header.
      */
     protected function set_codigo_beneficiario($value)

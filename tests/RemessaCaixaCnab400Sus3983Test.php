@@ -16,7 +16,7 @@ class RemessaCaixaCnab400Sus3983Test extends TestCase
             'tipo_inscricao'            => 2,
             'numero_inscricao'          => '04291622000177',
             'agencia'                   => '3090',
-            'codigo_beneficiario'       => '5188690', // CCCCCC + 0
+            'codigo_beneficiario'       => '0518869', // 0 + CCCCCC (header pos 31-37)
             'numero_sequencial_arquivo' => 1,
         ));
 
@@ -57,10 +57,13 @@ class RemessaCaixaCnab400Sus3983Test extends TestCase
         $this->assertSame(400, strlen($header), 'header deve ter 400 caracteres');
         $this->assertSame(400, strlen($detalhe), 'detalhe deve ter 400 caracteres');
 
-        $this->assertSame('5188690', substr($header, 30, 7), 'header pos 31-37 = CCCCCC+0');
+        $this->assertSame('0518869', substr($header, 30, 7), 'header pos 31-37 = 0+CCCCCC');
         $this->assertSame('   ', substr($header, 100, 3), 'header pos 101-103 em branco');
 
-        $this->assertSame('0518869', substr($detalhe, 30, 7), 'linha 2 pos 31-37 = 0+CCCCCC');
+        $this->assertSame('0518869', substr($detalhe, 20, 7), 'linha 2 pos 21-27 = 0+CCCCCC');
+        $this->assertSame('00', substr($detalhe, 29, 2), 'taxa permanencia pos 30-31 = zeros');
+        $this->assertSame('DOC-TESTE-3983', rtrim(substr($detalhe, 31, 25)), 'seu numero começa na pos 32');
+        $this->assertNotSame('0518869', substr($detalhe, 30, 7), 'pos 31-37 da linha 2 nao e o codigo do beneficiario');
         $this->assertSame('1', substr($detalhe, 75, 1), 'posicao 76 = 1');
         $this->assertSame('01', substr($detalhe, 106, 2), 'carteira pos 107-108 = 01');
     }
@@ -107,15 +110,17 @@ class RemessaCaixaCnab400Sus3983Test extends TestCase
 
         $linhas = preg_split("/\r\n|\n|\r/", trim($remessa->getText()));
         $this->assertSame($headerEsperado, substr($linhas[0], 30, 7));
-        $this->assertSame($detalheEsperado, substr($linhas[1], 30, 7));
+        $this->assertSame($detalheEsperado, substr($linhas[1], 20, 7));
+        $this->assertSame('00', substr($linhas[1], 29, 2));
+        $this->assertSame('X', rtrim(substr($linhas[1], 31, 25)));
     }
 
     public function providerCadastros()
     {
         return array(
-            'seis digitos' => array('518869', '5188690', '0518869'),
-            'com hifen DV' => array('518869-5', '5188690', '0518869'),
-            'sete com DV'  => array('5188695', '5188690', '0518869'),
+            'seis digitos' => array('518869', '0518869', '0518869'),
+            'com hifen DV' => array('518869-5', '0518869', '0518869'),
+            'sete com DV'  => array('5188695', '0518869', '0518869'),
         );
     }
 }
